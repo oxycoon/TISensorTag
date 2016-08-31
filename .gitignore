@@ -59,3 +59,4 @@ BleSensorTag/src/main/gen/
 *.properties
 *.classpath
 *.project
+*.iml
