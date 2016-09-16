@@ -100,7 +100,7 @@ public class SensorTagMovementProfile extends GenericBluetoothProfile {
 		
 		row.gyroValue.setText("X:0.00'/s, Y:0.00'/s, Z:0.00'/s");
 		row.magValue.setText("X:0.00mT, Y:0.00mT, Z:0.00mT");
-        row.WOS.setChecked(true);
+        row.WOS.setChecked(false); // MUST BE SET TO FALSE FOR THIS TO MODULE TO WORK ~~OXYCOON
         row.WOS.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -111,7 +111,7 @@ public class SensorTagMovementProfile extends GenericBluetoothProfile {
                 int error = mBTLeService.writeCharacteristic(configC, b);
                 if (error != 0) {
                     if (configC != null)
-                        Log.d("SensorTagMovementProfile","Sensor config failed: " + configC.getUuid().toString() + " Error: " + error);
+                        Log.d("SensorTagMovementProfil","Sensor config failed: " + configC.getUuid().toString() + " Error: " + error);
                 }
             }
         });
@@ -132,12 +132,12 @@ public class SensorTagMovementProfile extends GenericBluetoothProfile {
         int error = mBTLeService.writeCharacteristic(this.configC, b);
         if (error != 0) {
             if (this.configC != null)
-            Log.d("SensorTagMovementProfile","Sensor config failed: " + this.configC.getUuid().toString() + " Error: " + error);
+            Log.d("SensorTagMovementProfil","Sensor config failed: " + this.configC.getUuid().toString() + " Error: " + error);
         }
         error = this.mBTLeService.setCharacteristicNotification(this.dataC, true);
         if (error != 0) {
             if (this.dataC != null)
-            Log.d("SensorTagMovementProfile","Sensor notification enable failed: " + this.configC.getUuid().toString() + " Error: " + error);
+            Log.d("SensorTagMovementProfil","Sensor notification enable failed: " + this.configC.getUuid().toString() + " Error: " + error);
         }
 
 		this.periodWasUpdated(1000);
@@ -148,12 +148,12 @@ public class SensorTagMovementProfile extends GenericBluetoothProfile {
         int error = mBTLeService.writeCharacteristic(this.configC, new byte[] {0x00,0x00});
         if (error != 0) {
             if (this.configC != null)
-            Log.d("SensorTagMovementProfile","Sensor config failed: " + this.configC.getUuid().toString() + " Error: " + error);
+            Log.d("SensorTagMovementProfil","Sensor config failed: " + this.configC.getUuid().toString() + " Error: " + error);
         }
         error = this.mBTLeService.setCharacteristicNotification(this.dataC, false);
         if (error != 0) {
             if (this.dataC != null)
-            Log.d("SensorTagMovementProfile","Sensor notification disable failed: " + this.configC.getUuid().toString() + " Error: " + error);
+            Log.d("SensorTagMovementProfil","Sensor notification disable failed: " + this.configC.getUuid().toString() + " Error: " + error);
         }
         this.isEnabled = false;
 	}
