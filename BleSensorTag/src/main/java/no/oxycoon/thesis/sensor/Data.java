@@ -17,6 +17,18 @@ public class Data
     public Data(int timestamp)
     {
         _timestamp = timestamp;
+        _data = new ArrayList<Float>();
+    }
+
+    public Data(int timestamp, int size)
+    {
+        _timestamp = timestamp;
+        _data = new ArrayList<Float>();
+
+        for(int i = 0; i < size; i++)
+        {
+            _data.add(0.0f);
+        }
     }
 
     public Float getData(int index)
@@ -27,6 +39,16 @@ public class Data
     public long getTimestamp()
     {
         return _timestamp;
+    }
+
+    public void addData(float data)
+    {
+        _data.add(data);
+    }
+
+    public void modifyData(int index, float data)
+    {
+        _data.set(index, data);
     }
 
     public String toString()

@@ -58,7 +58,7 @@ public class FileManager
         }
         catch (IOException e)
         {
-            Log.d("SensorTagFileMangaer", "File writing failed: " + e.getMessage());
+            Log.d(LOG_TAG, "File writing failed: " + e.getMessage());
             return false;
         }
     }
@@ -75,19 +75,37 @@ public class FileManager
         {
             if(!externalDirectoryExists())
             {
+                Log.e(LOG_TAG, "External storage folder does not exist.");
                 return false;
             }
             File output = new File(_context.getExternalFilesDir(
                     Environment.DIRECTORY_DOCUMENTS + "/SensorTag"), name);
 
-            FileOutputStream outputStream = new FileOutputStream(output);
+            String string = "";
 
+            for(Data d : data)
+            {
+                string += data.toString() + "\n";
+            }
 
-
-            return true;
+            try
+            {
+                //output.createNewFile();
+                FileOutputStream outputStream = new FileOutputStream(output);
+                outputStream.write(string.getBytes());
+                outputStream.close();
+                return true;
+            }
+            catch (IOException e)
+            {
+                Log.d(LOG_TAG, "File writing failed: " + e.getMessage());
+                e.printStackTrace();
+                return false;
+            }
         }
         else
         {
+            Log.e(LOG_TAG, "External storage is not writable.");
             return false;
         }
     }

@@ -103,4 +103,10 @@
         <item>IBM IoT Foundation</item>
         <item>Custom</item>
     </string-array>
+
+
+    <!-- Oxycoon values -->
+    <string name="button_save_file">Save session to file</string>
+    <string name="session_edit_text_default">Session name</string>
+
 </resources>
