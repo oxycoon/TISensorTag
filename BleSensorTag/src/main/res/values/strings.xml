@@ -106,7 +106,8 @@
 
 
     <!-- Oxycoon values -->
-    <string name="button_save_file">Save session to file</string>
+    <string name="button_session_save_file">Save session to file</string>
+    <string name="button_session_toggle">Start session</string>
     <string name="session_edit_text_default">Session name</string>
 
 </resources>
