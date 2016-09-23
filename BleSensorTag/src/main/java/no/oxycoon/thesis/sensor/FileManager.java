@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -23,18 +24,32 @@ public class FileManager
         _context = context;
     }
 
-    public boolean writeFile(String filename, ArrayList<Data> data)
+    public boolean writeFile(String name, ArrayList<Data> data, boolean append)
     {
-        //TODO: check if external storage is available
-        //      if not - save internally.
+        if (name.equals(""))
+        {
+            name = "SensorTag_" + data.get(0).getTimestamp();
+        }
+        name += ".csv";
 
-        return true;
+        if(writeExternalFile(name, data, append))
+        {
+            return true;
+        }
+        else
+        {
+            return writeInternalFile(name, data, append);
+        }
     }
 
 
     private boolean writeInternalFile(String name, ArrayList<Data> data)
     {
-        //File file = new File(_context.getFilesDir(), name);
+        return writeInternalFile(name, data, false);
+    }
+
+    private boolean writeInternalFile(String name, ArrayList<Data> data, boolean append)
+    {
         FileOutputStream outputStream;
 
         name += ".csv";
@@ -48,9 +63,17 @@ public class FileManager
 
         try
         {
-            outputStream = _context.openFileOutput(name, Context.MODE_PRIVATE);
+            if(append)
+            {
+                outputStream = _context.openFileOutput(name, Context.MODE_PRIVATE | Context.MODE_APPEND);
+            }
+            else
+            {
+                outputStream = _context.openFileOutput(name, Context.MODE_PRIVATE);
+            }
             outputStream.write(string.getBytes());
             outputStream.close();
+            Log.d(LOG_TAG, "File written internally.");
             return true;
         }
         catch (IOException e)
@@ -62,12 +85,11 @@ public class FileManager
 
     private boolean writeExternalFile(String name, ArrayList<Data> data)
     {
-        if (name.equals(""))
-        {
-            name = "SensorTag_" + data.get(0).getTimestamp();
-        }
-        name += ".csv";
+        return writeExternalFile(name, data, false);
+    }
 
+    private boolean writeExternalFile(String name, ArrayList<Data> data, boolean append)
+    {
         if (isExternalStorageWritable())
         {
             if (!externalDirectoryExists())
@@ -88,9 +110,12 @@ public class FileManager
             try
             {
                 //output.createNewFile();
-                FileOutputStream outputStream = new FileOutputStream(output);
-                outputStream.write(string.getBytes());
-                outputStream.close();
+                FileWriter fw = new FileWriter(output, append);
+                if(append) fw.append(string);
+                else fw.write(string);
+                fw.flush();
+                fw.close();
+                Log.d(LOG_TAG, "File written externally.");
                 return true;
             }
             catch (IOException e)
