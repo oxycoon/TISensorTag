@@ -610,6 +610,7 @@ import com.example.ti.util.PreferenceWR;
                                     lamp.configureService();
                                     Log.d("DeviceActivity","Found Lamp Control Service");
                                 }*/
+
                                 if (DeviceInformationServiceProfile.isCorrectService(s)) {
                                     DeviceInformationServiceProfile devInfo = new DeviceInformationServiceProfile(context,mBluetoothDevice,s,mBtLeService);
                                     mProfiles.add(devInfo);

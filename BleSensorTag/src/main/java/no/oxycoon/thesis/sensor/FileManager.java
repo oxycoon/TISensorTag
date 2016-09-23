@@ -25,9 +25,6 @@ public class FileManager
 
     public boolean writeFile(String filename, ArrayList<Data> data)
     {
-
-
-
         //TODO: check if external storage is available
         //      if not - save internally.
 
@@ -44,7 +41,7 @@ public class FileManager
 
         String string = "";
 
-        for(Data d : data)
+        for (Data d : data)
         {
             string += data.toString() + "\n";
         }
@@ -65,15 +62,15 @@ public class FileManager
 
     private boolean writeExternalFile(String name, ArrayList<Data> data)
     {
-        if(name.equals(""))
+        if (name.equals(""))
         {
             name = "SensorTag_" + data.get(0).getTimestamp();
         }
         name += ".csv";
 
-        if(isExternalStorageWritable())
+        if (isExternalStorageWritable())
         {
-            if(!externalDirectoryExists())
+            if (!externalDirectoryExists())
             {
                 Log.e(LOG_TAG, "External storage folder does not exist.");
                 return false;
@@ -83,7 +80,7 @@ public class FileManager
 
             String string = "";
 
-            for(Data d : data)
+            for (Data d : data)
             {
                 string += data.toString() + "\n";
             }
@@ -114,9 +111,9 @@ public class FileManager
     {
         File dir = new File(_context.getExternalFilesDir(
                 Environment.DIRECTORY_DOCUMENTS), "SensorTag");
-        if(!dir.exists())
+        if (!dir.exists())
         {
-            if(!dir.mkdirs())
+            if (!dir.mkdirs())
             {
                 Log.e(LOG_TAG, "Directory not created");
                 return false;
@@ -128,7 +125,7 @@ public class FileManager
     private boolean isExternalStorageWritable()
     {
         String state = Environment.getExternalStorageState();
-        if(Environment.MEDIA_MOUNTED.equals(state))
+        if (Environment.MEDIA_MOUNTED.equals(state))
         {
             return true;
         }
@@ -138,8 +135,8 @@ public class FileManager
     private boolean isExternalStorageReadable()
     {
         String state = Environment.getExternalStorageState();
-        if(Environment.MEDIA_MOUNTED.equals(state) ||
-           Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
         {
             return true;
         }
