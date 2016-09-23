@@ -19,40 +19,53 @@ enum DataType
 
 /**
  * Created by Elisabeth on 01.09.2016.
- * <p/>
+ *
  * Denotes a data node collected at a time by a sensor. Data can be from barometer,
  * acceleromter and/or gyro.
  */
 public class Data
 {
-    private ArrayList<Float>    _data;
+    /**
+     *  Data values
+     */
+    private ArrayList<Float> _data;
+
+    /**
+     *  Data type at index in _data
+     */
     private ArrayList<DataType> _dataType;
-    private long                _timestamp;
+
+    /**
+     *  Timestamp at which the data is recorded
+     */
+    private long _timestamp;
 
     /**
      * Constructor where only timestamp is known.
      *
-     * @param timestamp Time at which the data is recorded
+     * @param timestamp
+     *  Time at which the data is recorded
      */
     public Data(int timestamp)
     {
         _timestamp = timestamp;
         _data = new ArrayList<Float>();
-        _dataType = new ArrayList<DataType>();
     }
 
     /**
      * Constructor where the amount of data points is known.
      *
-     * @param timestamp Time at which the data is recorded
-     * @param size      How many data points is in the record
+     * @param timestamp
+     *  Time at which the data is recorded
+     * @param size
+     *  How many data points is in the record
      */
     public Data(int timestamp, int size)
     {
         _timestamp = timestamp;
         _data = new ArrayList<Float>();
 
-        for (int i = 0; i < size; i++)
+        for(int i = 0; i < size; i++)
         {
             _data.add(0.0f);
             _dataType.add(DataType.UNKNOWN);
@@ -62,8 +75,10 @@ public class Data
     /**
      * Gets data at index.
      *
-     * @param index Index for the data
-     * @return Value of data at index
+     * @param index
+     *  Index for the data
+     * @return
+     *  Value of data at index
      */
     public Float getData(int index)
     {
@@ -96,9 +111,9 @@ public class Data
         String result = sdf.format(date);*/
         String result = _timestamp + "";
 
-        for (Float data : _data)
+        for(Float data : _data)
         {
-            result += "," + _data;
+            result += "," + _data ;
         }
         //result += "\n";
 
