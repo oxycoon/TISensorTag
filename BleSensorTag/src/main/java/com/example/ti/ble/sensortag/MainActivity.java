@@ -88,6 +88,8 @@ import com.example.ti.ble.common.HCIDefines;
 import com.example.ti.ble.common.HelpView;
 import com.example.ti.util.CustomToast;
 
+import no.oxycoon.thesis.sensor.FileManager;
+
 public class MainActivity extends ViewPagerActivity {
 	// Log
 	// private static final String TAG = "MainActivity";
@@ -126,6 +128,10 @@ public class MainActivity extends ViewPagerActivity {
 	private static final int NO_DEVICE = -1;
 	private boolean mInitialised = false;
 	SharedPreferences prefs = null;
+
+	//FileManager
+	public static FileManager _fm;
+	public static boolean _recording;
 
 	public MainActivity() {
 		mThis = this;
@@ -180,6 +186,8 @@ public class MainActivity extends ViewPagerActivity {
 		mFilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
 		mFilter.addAction(BluetoothLeService.ACTION_GATT_CONNECTED);
 		mFilter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED);
+
+		_fm = new FileManager(this);
     }
 
 
@@ -309,6 +317,23 @@ public class MainActivity extends ViewPagerActivity {
 		}
 	}
 
+	public void onBtnRecord(View view)
+	{
+		if(_recording)
+		{
+
+		}
+		else
+		{
+
+		}
+	}
+
+	public void onBtnSave(View view)
+	{
+		//TODO: Save file
+	}
+
 	void onConnect() {
 		if (mNumDevs > 0) {
 
@@ -359,6 +384,7 @@ public class MainActivity extends ViewPagerActivity {
 	private void startDeviceActivity() {
 		mDeviceIntent = new Intent(this, DeviceActivity.class);
 		mDeviceIntent.putExtra(DeviceActivity.EXTRA_DEVICE, mBluetoothDevice);
+		mDeviceIntent.putExtra(DeviceActivity.EXTRA_FILE_MANAGER, _fm);
 		startActivityForResult(mDeviceIntent, REQ_DEVICE_ACT);
 	}
 

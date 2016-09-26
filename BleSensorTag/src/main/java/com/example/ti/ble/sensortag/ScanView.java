@@ -67,6 +67,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -94,6 +95,11 @@ public class ScanView extends Fragment {
   @SuppressWarnings("unused")
   private CustomTimer mStatusTimer;
   private Context mContext;
+
+  //FileManager
+  private EditText _fmEditText;
+  private Button   _fmToggle;
+  private Button   _fmSave;
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -116,6 +122,11 @@ public class ScanView extends Fragment {
     
     // Alert parent activity
     mActivity.onScanViewReady(view);
+
+    //TODO: Fix listeners
+    _fmEditText = (EditText) view.findViewById(R.id.session_edit_text);
+    _fmSave = (Button) view.findViewById(R.id.button_session_save);
+    _fmToggle = (Button) view.findViewById(R.id.button_session_toggle);
 
     return view;
   }

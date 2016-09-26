@@ -8,12 +8,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Elisabeth on 17.09.2016.
  */
-public class FileManager
+public class FileManager implements Serializable
 {
     private final String LOG_TAG = "SensorTagFileManager";
 
@@ -72,6 +73,7 @@ public class FileManager
                 outputStream = _context.openFileOutput(name, Context.MODE_PRIVATE);
             }
             outputStream.write(string.getBytes());
+            outputStream.flush();
             outputStream.close();
             Log.d(LOG_TAG, "File written internally.");
             return true;

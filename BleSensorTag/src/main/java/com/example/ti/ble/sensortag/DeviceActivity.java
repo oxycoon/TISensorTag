@@ -104,6 +104,8 @@ import com.example.ti.ble.ti.profiles.TIOADProfile;
 import com.example.ti.ble.common.IBMIoTCloudProfile;
 import com.example.ti.util.PreferenceWR;
 
+import no.oxycoon.thesis.sensor.FileManager;
+
 
 @SuppressLint("InflateParams") public class DeviceActivity extends ViewPagerActivity {
 	// Log
@@ -111,6 +113,7 @@ import com.example.ti.util.PreferenceWR;
 
 	// Activity
 	public static final String EXTRA_DEVICE = "EXTRA_DEVICE";
+    public static final String EXTRA_FILE_MANAGER = "FILE_MANAGER";
 	private static final int PREF_ACT_REQ = 0;
 	private static final int FWUPDATE_ACT_REQ = 1;
 
@@ -135,6 +138,8 @@ import com.example.ti.util.PreferenceWR;
 
 	//GUI
 	private List<GenericBluetoothProfile> mProfiles;
+
+
 
 	public DeviceActivity() {
 		mResourceFragmentPager = R.layout.fragment_pager;
@@ -188,7 +193,6 @@ import com.example.ti.util.PreferenceWR;
 		Resources res = getResources();
 		XmlResourceParser xpp = res.getXml(R.xml.gatt_uuid);
 		new GattInfo(xpp);
-
 	}
 
 	@Override
