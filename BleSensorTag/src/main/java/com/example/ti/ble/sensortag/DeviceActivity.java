@@ -113,7 +113,8 @@ import no.oxycoon.thesis.sensor.FileManager;
 
 	// Activity
 	public static final String EXTRA_DEVICE = "EXTRA_DEVICE";
-    public static final String EXTRA_FILE_MANAGER = "FILE_MANAGER";
+    /*public static final String EXTRA_FILE_MANAGER = "FILE_MANAGER";
+    public static final String EXTRA_BOOL_RECORDING = "EXTRA_BOOL_RECORDING";*/
 	private static final int PREF_ACT_REQ = 0;
 	private static final int FWUPDATE_ACT_REQ = 1;
 

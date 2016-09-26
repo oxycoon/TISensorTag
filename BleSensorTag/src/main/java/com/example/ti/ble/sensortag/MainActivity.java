@@ -384,7 +384,8 @@ public class MainActivity extends ViewPagerActivity {
 	private void startDeviceActivity() {
 		mDeviceIntent = new Intent(this, DeviceActivity.class);
 		mDeviceIntent.putExtra(DeviceActivity.EXTRA_DEVICE, mBluetoothDevice);
-		mDeviceIntent.putExtra(DeviceActivity.EXTRA_FILE_MANAGER, _fm);
+		/*mDeviceIntent.putExtra(DeviceActivity.EXTRA_FILE_MANAGER, _fm);
+		mDeviceIntent.putExtra(DeviceActivity.EXTRA_BOOL_RECORDING, _recording);*/
 		startActivityForResult(mDeviceIntent, REQ_DEVICE_ACT);
 	}
 
