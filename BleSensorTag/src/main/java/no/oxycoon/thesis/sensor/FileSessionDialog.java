@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import com.example.ti.ble.sensortag.R;
 
 /**
- * Created by Daniel on 22.09.2016.
+ * Created by Elisabeth on 22.09.2016.
  */
 public class FileSessionDialog extends DialogFragment implements AdapterView.OnItemSelectedListener
 {

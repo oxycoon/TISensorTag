@@ -12,22 +12,26 @@ import java.util.TimeZone;
 public class Data
 {
     private ArrayList<Float> _data;
+    private ArrayList<DataType> _dataType;
     private long _timestamp;
 
     public Data(int timestamp)
     {
         _timestamp = timestamp;
         _data = new ArrayList<Float>();
+        _dataType = new ArrayList<DataType>();
     }
 
     public Data(int timestamp, int size)
     {
         _timestamp = timestamp;
         _data = new ArrayList<Float>();
+        _dataType = new ArrayList<DataType>();
 
         for(int i = 0; i < size; i++)
         {
             _data.add(0.0f);
+            _dataType.add(DataType.NO_DATA);
         }
     }
 
@@ -41,14 +45,29 @@ public class Data
         return _timestamp;
     }
 
-    public void addData(float data)
+    public void addData(float data, DataType type)
     {
         _data.add(data);
+        _dataType.add(type);
     }
 
-    public void modifyData(int index, float data)
+    public boolean modifyData(int index, float data, DataType type)
     {
-        _data.set(index, data);
+        if(_data.size() < index && _dataType.size() < index)
+        {
+            _data.set(index, data);
+            _dataType.set(index, type);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void insertData(int index, Data data, DataType type)
+    {
+
     }
 
     public String toString()

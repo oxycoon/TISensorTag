@@ -73,6 +73,8 @@ import com.example.ti.util.GenericCharacteristicTableRow;
 import com.example.ti.util.Point3D;
 
 public class SensorTagAccelerometerProfile extends GenericBluetoothProfile {
+	public static final String SENSORTAG_ACCELEROMETER = "com.example.ti.ble.sensortag.sensortagmovementprofile.SENSORTAG_ACCELEROMETER";
+
 	public SensorTagAccelerometerProfile(Context con,BluetoothDevice device,BluetoothGattService service,BluetoothLeService controller) {
 		super(con,device,service,controller);
 		this.tRow =  new GenericCharacteristicTableRow(con);

@@ -70,7 +70,10 @@ import com.example.ti.ble.common.GattInfo;
 import com.example.ti.ble.common.GenericBluetoothProfile;
 import com.example.ti.util.Point3D;
 
+import no.oxycoon.thesis.sensor.Data;
+
 public class SensorTagMovementProfile extends GenericBluetoothProfile {
+	public static final String SENSORTAG_MOVEMENT = "com.example.ti.ble.sensortag.sensortagmovementprofile.SENSORTAG_MOVEMENT";
 	
 	public SensorTagMovementProfile(Context con,BluetoothDevice device,BluetoothGattService service,BluetoothLeService controller) {
 		super(con,device,service,controller);
@@ -203,4 +206,9 @@ public class SensorTagMovementProfile extends GenericBluetoothProfile {
         map.put("compass_z",String.format("%.2f",v.z));
         return map;
     }
+
+	private void broadcastData(Data data)
+	{
+
+	}
 }
