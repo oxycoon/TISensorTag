@@ -75,6 +75,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 // import android.util.Log;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -612,7 +613,11 @@ public class MainActivity extends ViewPagerActivity {
 				}
 				mConnIndex = NO_DEVICE;
 				mBluetoothLeService.close();
-			} else {
+			} else if(DeviceActivity.ACTION_DATA_BROADCAST.equals(action))
+			{
+				Log.d("OXYCOON_MAIN", "Main activity recieved intent with data package");
+			}
+			else {
 				// Log.w(TAG,"Unknown action: " + action);
 			}
 

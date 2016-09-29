@@ -114,8 +114,6 @@ import no.oxycoon.thesis.sensor.FileManager;
 
 	// Activity
 	public static final String EXTRA_DEVICE = "EXTRA_DEVICE";
-    /*public static final String EXTRA_FILE_MANAGER = "FILE_MANAGER";
-    public static final String EXTRA_BOOL_RECORDING = "EXTRA_BOOL_RECORDING";*/
 	private static final int PREF_ACT_REQ = 0;
 	private static final int FWUPDATE_ACT_REQ = 1;
 
@@ -141,7 +139,9 @@ import no.oxycoon.thesis.sensor.FileManager;
 	//GUI
 	private List<GenericBluetoothProfile> mProfiles;
 
-
+    //Oxycoon
+    public static final String ACTION_DATA_BROADCAST = "ACTION_DATA_BROADCAST";
+    public static final String EXTRA_DATA = "EXTRA_DATA";
 
 	public DeviceActivity() {
 		mResourceFragmentPager = R.layout.fragment_pager;
@@ -680,7 +680,7 @@ import no.oxycoon.thesis.sensor.FileManager;
 
                 //OXYCOON
                 Data returnData = new Data();
-
+                returnData.setTimestamp();
                 //OXYCOON
 
 
@@ -702,13 +702,20 @@ import no.oxycoon.thesis.sensor.FileManager;
                                 Data data = p.getData();
                                 if(data != null)
                                 {
-                                    Log.d("OXYCOON", data.toString());
+                                    returnData.insertData(data);
                                 }
                             }
                         }
                         //Log.d("DeviceActivity","Got Characteristic : " + tempC.getUuid().toString());
                         break;
                     }
+                }
+                if(returnData.getSize() > 0)
+                {
+                    //Log.d("OXYCOON", returnData.toString());
+                    Intent dataBroadcast = new Intent(ACTION_DATA_BROADCAST);
+                    intent.putExtra(EXTRA_DATA, returnData);
+                    sendBroadcast(dataBroadcast);
                 }
 
 				//onCharacteristicChanged(uuidStr, value);

@@ -2,6 +2,7 @@ package no.oxycoon.thesis.sensor;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +12,7 @@ import java.util.TimeZone;
  * Created by Elisabeth on 01.09.2016.
  */
 
-public class Data
+public class Data implements Serializable
 {
     private static final String LOG_TAG = "no.oxycoon.thesis.data";
 
@@ -46,6 +47,7 @@ public class Data
         }
     }
 
+    public int getSize(){ return _data.size();}
     public Double getData(int index)
     {
         return _data.get(index);
@@ -54,6 +56,12 @@ public class Data
     public long getTimestamp()
     {
         return this._timestamp;
+    }
+
+    public void setTimestamp()
+    {
+        java.util.Date d = new java.util.Date();
+        _timestamp = d.getTime();
     }
     public void setTimestamp(long timestamp) { this._timestamp = timestamp;}
 
@@ -125,14 +133,16 @@ public class Data
             if(checker)
             {
                 this.addData(data.getData(i), data.getDataType(i));
+                //Log.d(LOG_TAG, "New data inserted into data!");
             }
             else if(!checker && overwrite)
             {
                 this.modifyData(index, data.getData(i), data.getDataType(i));
+                //Log.d(LOG_TAG, "Duplicate file type entry detected and overwrited!");
             }
             else
             {
-                Log.d("Oxycoon_DATA", "Duplicate file type entry detected and overwrite not enabled!");
+                Log.d(LOG_TAG, "Duplicate file type entry detected and overwrite not enabled!");
             }
             index = 0;
             checker = true;
@@ -141,7 +151,7 @@ public class Data
 
     private void restructureData()
     {
-        
+
     }
 
     public String toString()
