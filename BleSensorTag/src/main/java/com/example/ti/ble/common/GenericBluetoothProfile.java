@@ -68,6 +68,8 @@ import android.widget.TableRow;
 
 import java.util.Map;
 
+import no.oxycoon.thesis.sensor.Data;
+
 public class GenericBluetoothProfile {
 	protected BluetoothDevice mBTDevice;
 	protected BluetoothGattService mBTService;
@@ -275,4 +277,10 @@ public class GenericBluetoothProfile {
             e.printStackTrace();
         }
     }
+
+	/**
+	 * Added by Oxycoon
+	 * @return
+     */
+	public Data getData(){return null;}
 }

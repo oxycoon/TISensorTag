@@ -72,6 +72,9 @@ import com.example.ti.ble.common.GenericBluetoothProfile;
 import com.example.ti.util.GenericCharacteristicTableRow;
 import com.example.ti.util.Point3D;
 
+import no.oxycoon.thesis.sensor.Data;
+import no.oxycoon.thesis.sensor.DataType;
+
 public class SensorTagAccelerometerProfile extends GenericBluetoothProfile {
 	public static final String SENSORTAG_ACCELEROMETER = "com.example.ti.ble.sensortag.sensortagmovementprofile.SENSORTAG_ACCELEROMETER";
 
@@ -133,12 +136,29 @@ public class SensorTagAccelerometerProfile extends GenericBluetoothProfile {
 			}
 	}
     @Override
-    public Map<String,String> getMQTTMap() {
-        Point3D v = Sensor.ACCELEROMETER.convert(this.dataC.getValue());
-        Map<String,String> map = new HashMap<String, String>();
-        map.put("acc_x", String.format("%.2f", v.x));
-        map.put("acc_y",String.format("%.2f",v.y));
-        map.put("acc_z",String.format("%.2f",v.z));
-        return map;
-    }
+    public Map<String,String> getMQTTMap()
+	{
+		Point3D v = Sensor.ACCELEROMETER.convert(this.dataC.getValue());
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("acc_x", String.format("%.2f", v.x));
+		map.put("acc_y", String.format("%.2f", v.y));
+		map.put("acc_z", String.format("%.2f", v.z));
+		return map;
+	}
+
+	@Override
+	public Data getData()
+	{
+		java.util.Date date = new java.util.Date();
+		long time = date.getTime();
+
+		Data d = new Data(time, 3);
+		Point3D v = Sensor.ACCELEROMETER.convert(this.dataC.getValue());
+
+		d.modifyData(0, v.x, DataType.ACCEL_X);
+		d.modifyData(1, v.y, DataType.ACCEL_Y);
+		d.modifyData(2, v.z, DataType.ACCEL_Z);
+
+		return d;
+	}
 }

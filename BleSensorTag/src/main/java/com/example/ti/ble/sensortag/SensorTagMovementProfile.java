@@ -71,6 +71,7 @@ import com.example.ti.ble.common.GenericBluetoothProfile;
 import com.example.ti.util.Point3D;
 
 import no.oxycoon.thesis.sensor.Data;
+import no.oxycoon.thesis.sensor.DataType;
 
 public class SensorTagMovementProfile extends GenericBluetoothProfile {
 	public static final String SENSORTAG_MOVEMENT = "com.example.ti.ble.sensortag.sensortagmovementprofile.SENSORTAG_MOVEMENT";
@@ -207,8 +208,19 @@ public class SensorTagMovementProfile extends GenericBluetoothProfile {
         return map;
     }
 
-	private void broadcastData(Data data)
+	@Override
+	public Data getData()
 	{
+		java.util.Date date = new java.util.Date();
+		long time = date.getTime();
 
+		Data d = new Data(time, 3);
+		Point3D v = Sensor.MOVEMENT_ACC.convert(this.dataC.getValue());
+
+		d.modifyData(0, v.x, DataType.MOV_X);
+		d.modifyData(1, v.y, DataType.MOV_Y);
+		d.modifyData(2, v.z, DataType.MOV_Z);
+
+		return d;
 	}
 }

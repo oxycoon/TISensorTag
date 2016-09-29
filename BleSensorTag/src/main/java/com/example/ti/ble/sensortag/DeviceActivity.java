@@ -104,6 +104,7 @@ import com.example.ti.ble.ti.profiles.TIOADProfile;
 import com.example.ti.ble.common.IBMIoTCloudProfile;
 import com.example.ti.util.PreferenceWR;
 
+import no.oxycoon.thesis.sensor.Data;
 import no.oxycoon.thesis.sensor.FileManager;
 
 
@@ -676,6 +677,13 @@ import no.oxycoon.thesis.sensor.FileManager;
 				byte[] value = intent.getByteArrayExtra(BluetoothLeService.EXTRA_DATA);
 				String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
                 //Log.d("DeviceActivity","Got Characteristic : " + uuidStr);
+
+                //OXYCOON
+                Data returnData = new Data();
+
+                //OXYCOON
+
+
                 for (int ii = 0; ii < charList.size(); ii++) {
                     BluetoothGattCharacteristic tempC = charList.get(ii);
                     if ((tempC.getUuid().toString().equals(uuidStr))) {
@@ -690,6 +698,11 @@ import no.oxycoon.thesis.sensor.FileManager;
                                         if (mqttProfile != null)
                                             mqttProfile.addSensorValueToPendingMessage(e);
                                     }
+                                }
+                                Data data = p.getData();
+                                if(data != null)
+                                {
+                                    Log.d("OXYCOON", data.toString());
                                 }
                             }
                         }
