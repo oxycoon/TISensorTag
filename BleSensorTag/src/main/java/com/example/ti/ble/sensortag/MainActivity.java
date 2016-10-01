@@ -81,6 +81,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.ti.ble.common.BleDeviceInfo;
@@ -89,6 +90,7 @@ import com.example.ti.ble.common.HCIDefines;
 import com.example.ti.ble.common.HelpView;
 import com.example.ti.util.CustomToast;
 
+import no.oxycoon.thesis.sensor.DataCollection;
 import no.oxycoon.thesis.sensor.FileManager;
 
 public class MainActivity extends ViewPagerActivity {
@@ -132,7 +134,9 @@ public class MainActivity extends ViewPagerActivity {
 
 	//FileManager
 	public static FileManager _fm;
-	public static boolean _recording;
+	private boolean _recording = false;
+	private String _sessionName = "";
+	private DataCollection _dc;
 
 	public MainActivity() {
 		mThis = this;
@@ -320,13 +324,16 @@ public class MainActivity extends ViewPagerActivity {
 
 	public void onBtnRecord(View view)
 	{
+		Button b = (Button)view.findViewById(R.id.button_session_toggle);
 		if(_recording)
 		{
-
+			_recording = false;
+			b.setText(R.string.button_session_toggle_on);
 		}
 		else
 		{
-
+			_recording = true;
+			b.setText(R.string.button_session_toggle_off);
 		}
 	}
 
@@ -385,8 +392,19 @@ public class MainActivity extends ViewPagerActivity {
 	private void startDeviceActivity() {
 		mDeviceIntent = new Intent(this, DeviceActivity.class);
 		mDeviceIntent.putExtra(DeviceActivity.EXTRA_DEVICE, mBluetoothDevice);
-		/*mDeviceIntent.putExtra(DeviceActivity.EXTRA_FILE_MANAGER, _fm);
-		mDeviceIntent.putExtra(DeviceActivity.EXTRA_BOOL_RECORDING, _recording);*/
+		//mDeviceIntent.putExtra(DeviceActivity.EXTRA_FILE_MANAGER, _fm);
+		mDeviceIntent.putExtra(DeviceActivity.EXTRA_BOOL_RECORDING, _recording);
+
+		if( _recording);
+		{
+			if((_sessionName == "" || _sessionName == null))
+			{
+				_sessionName = "DefaultSessionName";
+			}
+			mDeviceIntent.putExtra(DeviceActivity.EXTRA_STR_NAME, _sessionName);
+
+		}
+
 		startActivityForResult(mDeviceIntent, REQ_DEVICE_ACT);
 	}
 
@@ -543,6 +561,13 @@ public class MainActivity extends ViewPagerActivity {
 			if (mConnIndex != NO_DEVICE) {
 				mBluetoothLeService.disconnect(mBluetoothDevice.getAddress());
 			}
+			/*if(resultCode == Activity.RESULT_OK && _recording)
+			{
+				_dc = (DataCollection) data.getSerializableExtra(DeviceActivity.EXTRA_DATA);
+				Toast.makeText(this, "Data in collection: " + _dc.getSize(), Toast.LENGTH_LONG).show();
+				Log.d("OXYCOON", "Data in collection: " + _dc.getSize());
+			}*/
+
 			break;
 
 		case REQ_ENABLE_BT:
@@ -613,10 +638,10 @@ public class MainActivity extends ViewPagerActivity {
 				}
 				mConnIndex = NO_DEVICE;
 				mBluetoothLeService.close();
-			} else if(DeviceActivity.ACTION_DATA_BROADCAST.equals(action))
+			} /*else if(DeviceActivity.ACTION_DATA_BROADCAST.equals(action))
 			{
 				Log.d("OXYCOON_MAIN", "Main activity recieved intent with data package");
-			}
+			}*/
 			else {
 				// Log.w(TAG,"Unknown action: " + action);
 			}

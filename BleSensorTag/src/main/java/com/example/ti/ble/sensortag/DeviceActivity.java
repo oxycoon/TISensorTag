@@ -58,6 +58,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
@@ -105,6 +106,7 @@ import com.example.ti.ble.common.IBMIoTCloudProfile;
 import com.example.ti.util.PreferenceWR;
 
 import no.oxycoon.thesis.sensor.Data;
+import no.oxycoon.thesis.sensor.DataCollection;
 import no.oxycoon.thesis.sensor.FileManager;
 
 
@@ -140,8 +142,13 @@ import no.oxycoon.thesis.sensor.FileManager;
 	private List<GenericBluetoothProfile> mProfiles;
 
     //Oxycoon
-    public static final String ACTION_DATA_BROADCAST = "ACTION_DATA_BROADCAST";
+    public static final String RESULT_EXTRA_DATA = "RESULT_EXTRA_DATA";
     public static final String EXTRA_DATA = "EXTRA_DATA";
+    public static final String EXTRA_BOOL_RECORDING = "EXTRA_BOOL_RECORDING";
+    public static final String EXTRA_STR_NAME = "EXTRA_STR_NAME";
+    private boolean _isRecording;
+    private String _name;
+    private DataCollection _collection;
 
 	public DeviceActivity() {
 		mResourceFragmentPager = R.layout.fragment_pager;
@@ -158,6 +165,16 @@ import no.oxycoon.thesis.sensor.FileManager;
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
+
+        _isRecording = intent.getBooleanExtra(EXTRA_BOOL_RECORDING, false);
+        Log.d("OXYCOON", "IsRecording is: " + _isRecording);
+
+        if(_isRecording)
+        {
+            _name = intent.getStringExtra(EXTRA_STR_NAME);
+            _collection = new DataCollection(_name);
+            Toast.makeText(this, "Recording enabled, session name: " + _name, Toast.LENGTH_SHORT).show();
+        }
 
 		// BLE
 		mBtLeService = BluetoothLeService.getInstance();
@@ -679,8 +696,8 @@ import no.oxycoon.thesis.sensor.FileManager;
                 //Log.d("DeviceActivity","Got Characteristic : " + uuidStr);
 
                 //OXYCOON
-                Data returnData = new Data();
-                returnData.setTimestamp();
+                    Data returnData = new Data();
+                    returnData.setTimestamp();
                 //OXYCOON
 
 
@@ -699,10 +716,13 @@ import no.oxycoon.thesis.sensor.FileManager;
                                             mqttProfile.addSensorValueToPendingMessage(e);
                                     }
                                 }
-                                Data data = p.getData();
-                                if(data != null)
+                                if(_isRecording)
                                 {
-                                    returnData.insertData(data);
+                                    Data data = p.getData();
+                                    if (data != null)
+                                    {
+                                        returnData.insertData(data);
+                                    }
                                 }
                             }
                         }
@@ -710,12 +730,10 @@ import no.oxycoon.thesis.sensor.FileManager;
                         break;
                     }
                 }
-                if(returnData.getSize() > 0)
+                if(returnData.getSize() > 0 && _isRecording)
                 {
                     //Log.d("OXYCOON", returnData.toString());
-                    Intent dataBroadcast = new Intent(ACTION_DATA_BROADCAST);
-                    intent.putExtra(EXTRA_DATA, returnData);
-                    sendBroadcast(dataBroadcast);
+                    _collection.addToCollection(returnData);
                 }
 
 				//onCharacteristicChanged(uuidStr, value);
