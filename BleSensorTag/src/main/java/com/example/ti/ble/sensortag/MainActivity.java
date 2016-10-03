@@ -343,7 +343,7 @@ public class MainActivity extends ViewPagerActivity {
 
 	public void onBtnSave(View view)
 	{
-		if(_dc.getSize() >= 0)
+		if(_dc.getSize() > 0)
 		{
 			if (_fm.writeFile(_dc))
 			{

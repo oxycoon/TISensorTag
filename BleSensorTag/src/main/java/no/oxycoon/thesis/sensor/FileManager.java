@@ -42,9 +42,13 @@ public class FileManager implements Serializable
             name = "SensorTag_";
         }
         if(data.size() > 0)
+        {
             name += "_" + data.get(0).getTimestamp() + ".csv";
+        }
         else
-            name += "_TEST.csv";
+        {
+            return false;
+        }
 
         if(writeExternalFile(name, data, append))
         {
@@ -76,10 +80,6 @@ public class FileManager implements Serializable
             {
                 string += data.toString() + "\n";
             }
-        }
-        else
-        {
-            string += "THIS IS A TEST";
         }
 
         try
@@ -130,10 +130,6 @@ public class FileManager implements Serializable
                 {
                     string += data.toString() + "\n";
                 }
-            }
-            else
-            {
-                string += "THIS IS A TEST";
             }
 
             try
