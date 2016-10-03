@@ -82,6 +82,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ti.ble.common.BleDeviceInfo;
@@ -333,13 +334,32 @@ public class MainActivity extends ViewPagerActivity {
 		else
 		{
 			_recording = true;
+			EditText temp = (EditText)findViewById(R.id.session_edit_text);
+			_sessionName = temp.getText().toString();
+			_dc = new DataCollection(_sessionName);
 			b.setText(R.string.button_session_toggle_off);
 		}
 	}
 
 	public void onBtnSave(View view)
 	{
-		//TODO: Save file
+		if(_dc.getSize() >= 0)
+		{
+			if (_fm.writeFile(_dc))
+			{
+				Toast.makeText(this, "Collection saved to file: " + _dc.getName() + ".csv",
+						Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+				Toast.makeText(this, "Collection failed to save.", Toast.LENGTH_SHORT).show();
+			}
+			_dc.clearCollection();
+		}
+		else
+		{
+			Toast.makeText(this, "No data in collection to save.", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	void onConnect() {

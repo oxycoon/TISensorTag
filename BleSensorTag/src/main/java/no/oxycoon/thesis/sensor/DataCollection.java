@@ -23,6 +23,11 @@ public class DataCollection implements Serializable
         //TODO: read file to create collection
     }
 
+    public void clearCollection()
+    {
+        _collection.clear();
+        _name = "";
+    }
 
     public void addToCollection(Data data)
     {

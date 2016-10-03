@@ -25,13 +25,26 @@ public class FileManager implements Serializable
         _context = context;
     }
 
+    public boolean writeFile(DataCollection collection)
+    {
+        return writeFile(collection, false);
+    }
+
+    public boolean writeFile(DataCollection collection, boolean append)
+    {
+        return writeFile(collection.getName(), collection.getAllData(), append);
+    }
+
     public boolean writeFile(String name, ArrayList<Data> data, boolean append)
     {
         if (name.equals(""))
         {
-            name = "SensorTag_" + data.get(0).getTimestamp();
+            name = "SensorTag_";
         }
-        name += ".csv";
+        if(data.size() > 0)
+            name += "_" + data.get(0).getTimestamp() + ".csv";
+        else
+            name += "_TEST.csv";
 
         if(writeExternalFile(name, data, append))
         {
@@ -57,9 +70,16 @@ public class FileManager implements Serializable
 
         String string = "";
 
-        for (Data d : data)
+        if(data.size() > 0)
         {
-            string += data.toString() + "\n";
+            for (Data d : data)
+            {
+                string += data.toString() + "\n";
+            }
+        }
+        else
+        {
+            string += "THIS IS A TEST";
         }
 
         try
@@ -104,9 +124,16 @@ public class FileManager implements Serializable
 
             String string = "";
 
-            for (Data d : data)
+            if(data.size() > 0)
             {
-                string += data.toString() + "\n";
+                for (Data d : data)
+                {
+                    string += data.toString() + "\n";
+                }
+            }
+            else
+            {
+                string += "THIS IS A TEST";
             }
 
             try

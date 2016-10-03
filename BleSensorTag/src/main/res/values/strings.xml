@@ -107,8 +107,8 @@
 
     <!-- Oxycoon values -->
     <string name="button_session_save_file">Save session to file</string>
-    <string name="button_session_toggle_on">Enable recording</string>
-    <string name="button_session_toggle_off">Disable recording</string>
+    <string name="button_session_toggle_on">Start new recording</string>
+    <string name="button_session_toggle_off">Stop recording</string>
     <string name="session_edit_text_default">Session name</string>
 
 </resources>
