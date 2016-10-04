@@ -216,14 +216,14 @@ public class SensorTagMovementProfile extends GenericBluetoothProfile {
 
 		Data d = new Data(time, 6);
 		Point3D v = Sensor.MOVEMENT_ACC.convert(this.dataC.getValue());
-		d.modifyData(0, v.x, DataType.MOV_X);
-		d.modifyData(1, v.y, DataType.MOV_Y);
-		d.modifyData(2, v.z, DataType.MOV_Z);
+		d.modifyData(0, v.x, DataType.ACCEL_X);
+		d.modifyData(1, v.y, DataType.ACCEL_Y);
+		d.modifyData(2, v.z, DataType.ACCEL_Z);
 
 		v = Sensor.MOVEMENT_GYRO.convert(this.dataC.getValue());
-		d.modifyData(0, v.x, DataType.GYR_X);
-		d.modifyData(1, v.y, DataType.GYR_Y);
-		d.modifyData(2, v.z, DataType.GYR_Z);
+		d.modifyData(3, v.x, DataType.GYR_X);
+		d.modifyData(4, v.y, DataType.GYR_Y);
+		d.modifyData(5, v.z, DataType.GYR_Z);
 
 
 		return d;
