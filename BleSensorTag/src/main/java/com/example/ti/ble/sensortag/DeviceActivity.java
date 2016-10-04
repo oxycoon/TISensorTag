@@ -620,7 +620,7 @@ import no.oxycoon.thesis.sensor.FileManager;
                                     else {
                                         mov.grayOutCell(true);
                                     }
-                                    Log.d("DeviceActivity","Found Motion !");
+                                    Log.d("DeviceActivity","Found Motion, movement !");
                                 }
                                 if (SensorTagAccelerometerProfile.isCorrectService(s)) {
                                     SensorTagAccelerometerProfile acc = new SensorTagAccelerometerProfile(context,mBluetoothDevice,s,mBtLeService);
@@ -632,7 +632,7 @@ import no.oxycoon.thesis.sensor.FileManager;
                                     else {
                                         acc.grayOutCell(true);
                                     }
-                                    Log.d("DeviceActivity","Found Motion !");
+                                    Log.d("DeviceActivity","Found Motion, accelerometer !");
 
                                 }
                                 if (SensorTagDisplayProfile.isCorrectService(s)) {

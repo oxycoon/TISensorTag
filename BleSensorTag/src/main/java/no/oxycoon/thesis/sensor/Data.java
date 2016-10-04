@@ -164,9 +164,36 @@ public class Data implements Serializable
         String result = _timestamp + "";
         /*result += "," + _data + "\n";*/
 
-        for(double data : _data)
+        for(int i = 0; i < _data.size(); i++)
         {
-            result += "," + data ;
+            result += "," + _data.get(i) ;
+
+            switch(_dataType.get(i)){
+                case ACCEL_X:
+                    result += "AX";
+                    break;
+                case ACCEL_Y:
+                    result += "AY";
+                    break;
+                case ACCEL_Z:
+                    result += "AZ";
+                    break;
+                case MOV_X:
+                    result += "MX";
+                    break;
+                case MOV_Y:
+                    result += "MY";
+                    break;
+                case MOV_Z:
+                    result += "MZ";
+                    break;
+                case BAR:
+                    result += "BAR";
+                    break;
+                default:
+                    result += "UK";
+                    break;
+            }
         }
         //result += "\n";
 
