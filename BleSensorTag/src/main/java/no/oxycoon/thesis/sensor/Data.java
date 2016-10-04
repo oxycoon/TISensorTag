@@ -156,11 +156,6 @@ public class Data implements Serializable
 
     public String toString()
     {
-        /*Date date = new Date(_timestamp);
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT+0"));
-
-        String result = sdf.format(date);*/
         String result = _timestamp + "";
         /*result += "," + _data + "\n";*/
 
@@ -186,6 +181,15 @@ public class Data implements Serializable
                     break;
                 case MOV_Z:
                     result += "MZ";
+                    break;
+                case GYR_X:
+                    result += "GX";
+                    break;
+                case GYR_Y:
+                    result += "GY";
+                    break;
+                case GYR_Z:
+                    result += "GZ";
                     break;
                 case BAR:
                     result += "BAR";

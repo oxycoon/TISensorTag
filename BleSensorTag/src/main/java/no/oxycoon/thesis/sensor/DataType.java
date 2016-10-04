@@ -11,6 +11,9 @@ public enum DataType
     MOV_X,
     MOV_Y,
     MOV_Z,
+    GYR_X,
+    GYR_Y,
+    GYR_Z,
     BAR,
     UNKNOWN,
     NO_DATA
