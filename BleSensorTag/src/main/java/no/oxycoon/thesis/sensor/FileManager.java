@@ -128,7 +128,7 @@ public class FileManager implements Serializable
             {
                 for (Data d : data)
                 {
-                    string += data.toString() + "\n";
+                    string += d.toString() + "\n";
                 }
             }
 

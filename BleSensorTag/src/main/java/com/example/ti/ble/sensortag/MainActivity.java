@@ -581,12 +581,12 @@ public class MainActivity extends ViewPagerActivity {
 			if (mConnIndex != NO_DEVICE) {
 				mBluetoothLeService.disconnect(mBluetoothDevice.getAddress());
 			}
-			/*if(resultCode == Activity.RESULT_OK && _recording)
+			if(resultCode == Activity.RESULT_OK && _recording && data != null)
 			{
-				_dc = (DataCollection) data.getSerializableExtra(DeviceActivity.EXTRA_DATA);
+				_dc = (DataCollection) data.getSerializableExtra(DeviceActivity.RESULT_EXTRA_DATA);
 				Toast.makeText(this, "Data in collection: " + _dc.getSize(), Toast.LENGTH_LONG).show();
 				Log.d("OXYCOON", "Data in collection: " + _dc.getSize());
-			}*/
+			}
 
 			break;
 

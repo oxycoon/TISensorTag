@@ -217,6 +217,7 @@ import no.oxycoon.thesis.sensor.FileManager;
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+
         if (mqttProfile != null) {
             mqttProfile.disconnect();
 
@@ -294,6 +295,19 @@ import no.oxycoon.thesis.sensor.FileManager;
 		// Log.d(TAG, "onPause");
 		super.onPause();
 	}
+
+    @Override
+    public void onBackPressed()
+    {
+        if(_isRecording)
+        {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(RESULT_EXTRA_DATA, _collection);
+            setResult(RESULT_OK, resultIntent);
+        }
+        super.onBackPressed();
+    }
+
 	private static IntentFilter makeGattUpdateIntentFilter() {
 		final IntentFilter fi = new IntentFilter();
 		fi.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
@@ -732,7 +746,7 @@ import no.oxycoon.thesis.sensor.FileManager;
                 }
                 if(returnData.getSize() > 0 && _isRecording)
                 {
-                    //Log.d("OXYCOON", returnData.toString());
+                    Log.d("OXYCOON", returnData.toString());
                     _collection.addToCollection(returnData);
                 }
 

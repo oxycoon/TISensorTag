@@ -31,7 +31,8 @@ public class DataCollection implements Serializable
 
     public void addToCollection(Data data)
     {
-        _collection.add(data);
+        //if(getLastEntry().getTimestamp() != data.getTimestamp())
+            _collection.add(data);
     }
 
     public ArrayList<Data> getAllData()
@@ -43,6 +44,8 @@ public class DataCollection implements Serializable
     {
         return _collection.get(index);
     }
+
+    public Data getLastEntry() { return _collection.get(_collection.size()-1);}
 
     public String getName()
     {
