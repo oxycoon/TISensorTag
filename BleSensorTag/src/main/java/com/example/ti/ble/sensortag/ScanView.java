@@ -120,13 +120,15 @@ public class ScanView extends Fragment {
     mEmptyMsg = (TextView)view.findViewById(R.id.no_device);    
     mBusy = false;
     
-    // Alert parent activity
-    mActivity.onScanViewReady(view);
+
 
     //TODO: Fix listeners
     _fmEditText = (EditText) view.findViewById(R.id.session_edit_text);
     _fmSave = (Button) view.findViewById(R.id.button_session_save);
     _fmToggle = (Button) view.findViewById(R.id.button_session_toggle);
+
+    // Alert parent activity
+    mActivity.onScanViewReady(view);
 
     return view;
   }

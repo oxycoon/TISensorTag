@@ -144,7 +144,7 @@ public class SensorTagMovementProfile extends GenericBluetoothProfile {
             Log.d("SensorTagMovementProfil","Sensor notification enable failed: " + this.configC.getUuid().toString() + " Error: " + error);
         }
 
-		this.periodWasUpdated(1000);
+		this.periodWasUpdated(100);
         this.isEnabled = true;
 	}
 	@Override 
@@ -214,7 +214,7 @@ public class SensorTagMovementProfile extends GenericBluetoothProfile {
 		java.util.Date date = new java.util.Date();
 		long time = date.getTime();
 
-		Data d = new Data(time, 6);
+		Data d = new Data(time, 10);
 		Point3D v = Sensor.MOVEMENT_ACC.convert(this.dataC.getValue());
 		d.modifyData(0, v.x, DataType.ACCEL_X);
 		d.modifyData(1, v.y, DataType.ACCEL_Y);
@@ -224,6 +224,11 @@ public class SensorTagMovementProfile extends GenericBluetoothProfile {
 		d.modifyData(3, v.x, DataType.GYR_X);
 		d.modifyData(4, v.y, DataType.GYR_Y);
 		d.modifyData(5, v.z, DataType.GYR_Z);
+
+		v = Sensor.MOVEMENT_MAG.convert(this.dataC.getValue());
+		d.modifyData(6, v.x, DataType.COM_X);
+		d.modifyData(7, v.y, DataType.COM_Y);
+		d.modifyData(8, v.z, DataType.COM_Z);
 
 
 		return d;

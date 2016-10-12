@@ -116,8 +116,18 @@ public class Data implements Serializable
 
     public void insertData(Data data, boolean overwrite)
     {
-        boolean checker = true;
+        boolean dataExists = false;
         int index = 0;
+
+        if(data.getSize() > this.getSize())
+        {
+            int targetSize = data.getSize();
+            for(int i = this.getSize(); i < targetSize; i++)
+            {
+                _data.add(0.0);
+                _dataType.add(DataType.NO_DATA);
+            }
+        }
 
         for(int i = 0; i < data.getDataTypes().size(); i++)
         {
@@ -125,27 +135,31 @@ public class Data implements Serializable
             {
                 if(data.getDataType(i) == this.getDataType(j))
                 {
-                    checker = false;
+                    dataExists = true;
                     index = j;
                     break;
                 }
             }
-            if(checker)
+            /*if(!dataExists)
             {
                 this.addData(data.getData(i), data.getDataType(i));
                 //Log.d(LOG_TAG, "New data inserted into data!");
-            }
-            else if(!checker && overwrite)
+            }*/
+            if((dataExists && overwrite))
             {
                 this.modifyData(index, data.getData(i), data.getDataType(i));
                 //Log.d(LOG_TAG, "Duplicate file type entry detected and overwrited!");
+            }
+            else if(_dataType.get(i) == DataType.UNKNOWN || _dataType.get(i) == DataType.NO_DATA)
+            {
+                this.modifyData(i, data.getData(i), data.getDataType(i));
             }
             else
             {
                 Log.d(LOG_TAG, "Duplicate file type entry detected and overwrite not enabled!");
             }
             index = 0;
-            checker = true;
+            dataExists = false;
         }
     }
 
@@ -161,41 +175,40 @@ public class Data implements Serializable
 
         for(int i = 0; i < _data.size(); i++)
         {
-            result += "," + _data.get(i) ;
-
+            result += ",";
             switch(_dataType.get(i)){
                 case ACCEL_X:
-                    result += "AX";
+                    result += "AX " + _data.get(i);
                     break;
                 case ACCEL_Y:
-                    result += "AY";
+                    result += "AY " + _data.get(i);
                     break;
                 case ACCEL_Z:
-                    result += "AZ";
+                    result += "AZ " + _data.get(i);
                     break;
-                case MOV_X:
-                    result += "MX";
+                case COM_X:
+                    result += "CX " + _data.get(i);
                     break;
-                case MOV_Y:
-                    result += "MY";
+                case COM_Y:
+                    result += "CY " + _data.get(i);
                     break;
-                case MOV_Z:
-                    result += "MZ";
+                case COM_Z:
+                    result += "CZ " + _data.get(i);
                     break;
                 case GYR_X:
-                    result += "GX";
+                    result += "GX " + _data.get(i);
                     break;
                 case GYR_Y:
-                    result += "GY";
+                    result += "GY " + _data.get(i);
                     break;
                 case GYR_Z:
-                    result += "GZ";
+                    result += "GZ " + _data.get(i);
                     break;
                 case BAR:
-                    result += "BAR";
+                    result += "BA " + _data.get(i);
                     break;
                 default:
-                    result += "UK";
+                    result += "ND";
                     break;
             }
         }

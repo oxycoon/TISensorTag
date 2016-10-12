@@ -69,6 +69,9 @@ import com.example.ti.ble.common.GattInfo;
 import com.example.ti.ble.common.GenericBluetoothProfile;
 import com.example.ti.util.Point3D;
 
+import no.oxycoon.thesis.sensor.Data;
+import no.oxycoon.thesis.sensor.DataType;
+
 public class SensorTagBarometerProfile extends GenericBluetoothProfile {
 	private BluetoothGattCharacteristic calibC;
 	private boolean isCalibrated;
@@ -141,8 +144,8 @@ public class SensorTagBarometerProfile extends GenericBluetoothProfile {
                 Log.d("SensorTagBarometerProfile","Sensor notification enable failed: " + this.configC.getUuid().toString() + " Error: " + error);
             }
 		}
+		this.periodWasUpdated(100);
         this.isEnabled = true;
-
 	}
 	@Override
 	public void didReadValueForCharacteristic(BluetoothGattCharacteristic c) {
@@ -216,4 +219,16 @@ public class SensorTagBarometerProfile extends GenericBluetoothProfile {
         map.put("air_pressure",String.format("%.2f",v.x / 100));
         return map;
     }
+
+	@Override
+	public Data getData()
+	{
+		java.util.Date date = new java.util.Date();
+		long time = date.getTime();
+
+		Data d = new Data(time, 10);
+		Point3D v = Sensor.BAROMETER.convert(this.dataC.getValue());
+		d.modifyData(9, v.x, DataType.BAR);
+		return d;
+	}
 }
